@@ -4,6 +4,7 @@ const request = require('supertest');
 const app = require('../../app');
 const { buildVideoObject } = require('../test-utils');
 const { connectDatabaseAndDropData, diconnectDatabase } = require('../database-utils');
+const Video = require('../../models/video');
 
 // Test Suite
 describe('Server Test: Create Videos', () => {
@@ -31,7 +32,8 @@ describe('Server Test: Create Videos', () => {
       .post('/videos')
       .type('form')
       .send(videoToCreate);
-    const createdVideo = await Video.findOne({title: videoToCreate.title});
+    //const createdVideo = await Video.findOne({title: videoToCreate.title});
+    const createdVideo = await Video.findOne(videoToCreate);
     // Verify
     assert.equal(createdVideo.title, videoToCreate.title);
     assert.equal(createdVideo.description, videoToCreate.description);

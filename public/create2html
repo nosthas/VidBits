@@ -10,12 +10,12 @@
 
     <div class="title-container">
       <div class="title-logo">
-        <a href="./index.html"><img src="img/logo.svg" alt=""></a>
+        <a href="/"><img src="img/logo.svg" alt=""></a>
       </div>
     </div>
 
     <h2 class="form-title">Add Video</h2>
-    <form class="input-form" action="/items/create" method="post" >
+    <form class="input-form" action="/videos" method="post" >
 
       <label class="form-label" for="videoUrl" >Url</label>
       <input id="videoUrl-input" name="url"/>

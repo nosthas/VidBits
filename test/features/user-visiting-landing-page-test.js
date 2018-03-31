@@ -15,7 +15,7 @@ describe('Feature: Landing Page', () => {
       // Setup
       // Exercise
       browser.url('/');
-      browser.click('a[href="./create.html"]');
+      browser.click('a[href="/video/add"]');
       // Verify
       assert.include(browser.getText('body'), 'Save a video');
     });

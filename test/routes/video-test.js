@@ -2,7 +2,7 @@
 const { assert } = require('chai');
 const request = require('supertest');
 const app = require('../../app');
-const { buildVideoObject } = require('../test-utils');
+const { buildVideoObject, parseTextFromHTML } = require('../test-utils');
 const { connectDatabaseAndDropData, diconnectDatabase } = require('../database-utils');
 const Video = require('../../models/video');
 
@@ -12,12 +12,12 @@ describe('Server Test: Create Videos', () => {
   beforeEach(connectDatabaseAndDropData);
   afterEach(diconnectDatabase);
 
-  it('POST /videos return 201 code', async () => {
+  it('POST /video return 201 code', async () => {
     // Setup
     const videoToCreate = buildVideoObject();
     // Exercise
     const response = await request(app)
-      .post('/videos')
+      .post('/video')
       .type('form')
       .send(videoToCreate);
     // Verify
@@ -29,7 +29,7 @@ describe('Server Test: Create Videos', () => {
     const videoToCreate = buildVideoObject();
     // Exercise
     const response = await request(app)
-      .post('/videos')
+      .post('/video')
       .type('form')
       .send(videoToCreate);
     //const createdVideo = await Video.findOne({title: videoToCreate.title});
@@ -37,5 +37,18 @@ describe('Server Test: Create Videos', () => {
     // Verify
     assert.equal(createdVideo.title, videoToCreate.title);
     assert.equal(createdVideo.description, videoToCreate.description);
+  });
+
+  it('POST /video response contains video detail', async () => {
+    // Setup
+    const videoToCreate = buildVideoObject();
+    // Exercise
+    const response = await request(app)
+      .post('/video')
+      .type('form')
+      .send(videoToCreate);
+    // Verify
+    assert.include(parseTextFromHTML(response.text, 'h1'), videoToCreate.title);
+
   });
 });

@@ -1,4 +1,5 @@
 const {assert} = require('chai');
+const { buildVideoObject } = require('../test-utils');
 
 describe('Feature: Landing Page', () => {
   describe('GET "/"', () => {
@@ -19,6 +20,5 @@ describe('Feature: Landing Page', () => {
       // Verify
       assert.include(browser.getText('body'), 'Save a video');
     });
-
   });
 });

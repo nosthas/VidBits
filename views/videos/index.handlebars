@@ -1,5 +1,6 @@
 <h1>Template Index</h1>
 <div id="videos-container" class="contents-container">
+  {{#each videos as |video|}}
    <div class="video-card">
     <div class="video-player">
         <iframe class="video-player" src="{{video.videoUrl}}" frameborder="0" allowfullscreen></iframe>
@@ -8,5 +9,6 @@
       {{video.title}}
     </div>
   </div>
+  {{/each}}
 </div>
 <a class="add-video-button" href="/video/add">Add Video</a>

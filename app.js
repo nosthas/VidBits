@@ -19,8 +19,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', function (req, res) {
-  //const video = {title:"Lighting and Baking Workflow: Blender Tutorial", description: "two", videoUrl:'https://www.youtube.com/embed/XGnDu_NsTss'}
-  res.render('index')
+  res.redirect('/video')
 })
 
 app.use('/video', videoRouter);

@@ -19,8 +19,9 @@ router.post('/', async (req, res, next) => {
   video.validateSync();
 
   if (video.errors) {
+    res.status(400).render('videos/create', {video: video});
+    //res.send("");
 
-    res.status(400).render('error', {video: video});
   } else {
     await video.save();
     res.status(201);

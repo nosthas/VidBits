@@ -49,6 +49,58 @@ describe('Server Test: Create Videos', () => {
       .send(videoToCreate);
     // Verify
     assert.include(parseTextFromHTML(response.text, 'h1'), videoToCreate.title);
-
   });
+
+  it.skip('POST /video cannot submit empty title', async () => {
+    // Setup
+    const videoToCreate = { videoUrl: 'https://www.youtube.com/embed/XGnDu_NsTss',
+                            description: 'Discover the complete workflow of setting up lighting in a nature scene'};
+    // Exercise
+    const response = await request(app)
+      .post('/video')
+      .type('form')
+      .send(videoToCreate);
+    // Verify
+    assert.equal(response.text, '');
+  });
+
+  it('POST /video returns 400 on empty title', async () => {
+    // Setup
+    const videoToCreate = { videoUrl: 'https://www.youtube.com/embed/XGnDu_NsTss',
+                            description: 'Discover the complete workflow of setting up lighting in a nature scene'};
+    // Exercise
+    const response = await request(app)
+      .post('/video')
+      .type('form')
+      .send(videoToCreate);
+    // Verify
+    assert.equal(response.status, 400);
+  });
+
+  it('Returns Error Message when submit empty title', async () => {
+    // Setup
+    const videoToCreate = { videoUrl: 'https://www.youtube.com/embed/XGnDu_NsTss',
+                            description: 'Discover the complete workflow of setting up lighting in a nature scene'};
+    // Exercise
+    const response = await request(app)
+      .post('/video')
+      .type('form')
+      .send(videoToCreate);
+    // Verify
+    assert.include(parseTextFromHTML(response.text, '.error'), 'Path `title` is required.');
+  });
+
+  it('Preserves other fields when submit empty title', async () => {
+    // Setup
+    const videoToCreate = { videoUrl: 'https://www.youtube.com/embed/XGnDu_NsTss',
+                            description: 'Discover the complete workflow of setting up lighting in a nature scene'};
+    // Exercise
+    const response = await request(app)
+      .post('/video')
+      .type('form')
+      .send(videoToCreate);
+    // Verify
+    assert.include(parseTextFromHTML(response.text, '#description-input'), videoToCreate.description);
+  });
+
 });

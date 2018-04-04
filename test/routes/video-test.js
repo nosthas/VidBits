@@ -103,4 +103,16 @@ describe('Server Test: Create Videos', () => {
     assert.include(parseTextFromHTML(response.text, '#description-input'), videoToCreate.description);
   });
 
+  it('Display a individual video', async () => {
+    // Setup
+    const videoToCreate = buildVideoObject();
+    const video = new Video(videoToCreate);
+    await video.save();
+    // Exercise
+    const response = await request(app)
+      .get(`/video/${video._id}`);
+    // Verify
+    assert.include(parseTextFromHTML(response.text, 'h1'), videoToCreate.title);
+  });
+
 });

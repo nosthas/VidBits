@@ -8,8 +8,16 @@ router.get('/', async (req, res, next) => {
   res.render('videos/index', {videos})
 });
 
+
 router.get('/add', (req, res, next) => {
   res.render('videos/create');
+});
+
+router.get('/:id', async (req, res, next) => {
+  const videoId = req.params.id;
+  const video = await Video.findOne({'_id':videoId});
+  console.log("video");
+  res.render('videos/show', {video});
 });
 
 router.post('/', async (req, res, next) => {
